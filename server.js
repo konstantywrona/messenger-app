@@ -8,7 +8,7 @@ const server = app.listen(8000, () => {
 const path = require('path');
 const io = socket(server);
 
-const message = [];
+const messages = [];
 
 app.use(express.static(path.join(__dirname, '/client/')));
 
