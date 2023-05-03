@@ -1,0 +1,7 @@
+{
+  "name": "messenger-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Konstanty Wrona <koswro@gmail.com>",
+  "license": "MIT"
+}
