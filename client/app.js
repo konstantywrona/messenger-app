@@ -14,6 +14,7 @@ let userName = '';
 
 const login = (e) => {
   e.preventDefault();
+
   if (userNameInput.value.length > 0) {
     userName = userNameInput.value;
     loginForm.classList.remove('show');
@@ -24,15 +25,19 @@ const login = (e) => {
   }
 };
 
-const sendMessage = (e) => {
+function sendMessage(e) {
   e.preventDefault();
-  if (messageContentInput.value.length > 0) {
-    addMessage(userName, messageContentInput.value);
-    messageContentInput.value = '';
+
+  let messageContent = messageContentInput.value;
+
+  if (!messageContent.length) {
+    alert('You have to type something!');
   } else {
-    alert('Please enter a message');
+    addMessage(userName, messageContent);
+    socket.emit('message', { author: userName, content: messageContent });
+    messageContentInput.value = '';
   }
-};
+}
 
 function addMessage(author, content) {
   const message = document.createElement('li');
