@@ -23,7 +23,7 @@ io.on('connection', (socket) => {
     users.push({ id: socket.id, name: userName });
     socket.broadcast.emit('message', {
       author: 'Chatbot',
-      content: `<i>${userName} has joined the conversation!`,
+      content: `<i>${userName} has joined the conversation`,
     });
   });
   socket.on('message', (message) => {
@@ -32,7 +32,13 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('message', message);
   });
   socket.on('disconnect', () => {
-    console.log('Oh, socket ' + socket.id + ' has left');
+    if (users.length > 0) {
+      userName = users.filter((user) => user.id === socket.id)[0].name;
+      loggedUsers = users.filter((user) => user.id !== socket.id);
+      socket.broadcast.emit('message', {
+        author: 'Chatbot',
+        content: `<i>${userName} has left the conversation`,
+      });
+    }
   });
-  console.log("I've added a listener on message and disconnect events \n");
 });
